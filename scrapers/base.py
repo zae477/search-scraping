@@ -9,9 +9,14 @@ def render_and_extract(url, wait_selector, extract_fn):
         try:
             page.wait_for_selector(wait_selector)
         except Exception:
-            print("TITLE:", page.title())
+            html = page.content()
             print("URL:", page.url)
-            print("HTML HEAD:", page.content()[:3000])
+            print("horizontal-area count:", html.count("horizontal-area"))
+            print("rank-list count:", html.count("rank-list"))
+            idx = html.find("인기 검색어")
+            print("인기 검색어 idx:", idx)
+            if idx != -1:
+                print("CONTEXT:", html[max(0, idx - 300):idx + 500])
             raise
         result = extract_fn(page)
         browser.close()
