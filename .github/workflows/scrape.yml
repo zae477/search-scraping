@@ -19,5 +19,6 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+      - run: echo 'Acquire::ForceIPv4 "true";' | sudo tee /etc/apt/apt.conf.d/99force-ipv4
       - run: playwright install --with-deps chromium
       - run: python main.py ${{ inputs.site }}
