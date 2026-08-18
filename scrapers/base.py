@@ -9,8 +9,9 @@ def render_and_extract(url, wait_selector, extract_fn):
         try:
             page.wait_for_selector(wait_selector)
         except Exception:
-            page.screenshot(path="debug.png")
-            open("debug.html", "w").write(page.content())
+            print("TITLE:", page.title())
+            print("URL:", page.url)
+            print("HTML HEAD:", page.content()[:3000])
             raise
         result = extract_fn(page)
         browser.close()
