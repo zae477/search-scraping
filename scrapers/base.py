@@ -10,7 +10,6 @@ def render_and_extract(url, wait_selector, extract_fn):
             timezone_id="Asia/Seoul",
         )
         page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        page.on("response", lambda r: print("XHR:", r.status, r.url) if r.request.resource_type in ("xhr", "fetch") else None)
         page.goto(url, wait_until="domcontentloaded")
         for _ in range(20):
             if page.locator(wait_selector).count() > 0:
